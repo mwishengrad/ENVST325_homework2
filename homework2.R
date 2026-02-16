@@ -103,3 +103,36 @@ firstFlood <- floods %>%
   
 firstFlood
 
+
+#HOMEWORK
+
+
+#Question 1
+
+# Stream stage plot for PEACE RIVER AT US 17 AT ZOLFO SPRINGS from earlier section
+peaceH <- streamH %>% 
+  filter(siteID == 2295637)
+plot(peaceH$dateF, peaceH$gheight.ft, type="b", pch=19, xlab="Date",
+     ylab = "Stage height (ft)")
+
+#Stream stage plot for FISHEATING CREEK AT PALMDALE
+fishCreek <- streamH %>%
+  filter(siteID == 2256500)
+plot(fishCreek$dateF, fishCreek$gheight.ft, type="b", pch=19, xlab="Date",
+     ylab = "Stage height (ft)")
+
+#Stream stage plot for SANTA FE RIVER NEAR FORT WHITE
+santaFe <- streamH %>%
+  filter(siteID == 2322500)
+plot(santaFe$dateF, santaFe$gheight.ft, type="b", pch=19, xlab="Date",
+     ylab = "Stage height (ft)")
+
+#WITHLACOOCHEE RIVER AT US 301 AT TRILBY
+trilby <-streamH %>%
+    filter(siteID == 2312000)
+plot(trilby$dateF, trilby$gheight.ft, type="b", pch=19, xlab="Date",
+     ylab = "Stage height (ft)")
+
+
+#Question 2
+
