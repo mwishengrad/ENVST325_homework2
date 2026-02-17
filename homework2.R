@@ -136,3 +136,46 @@ plot(trilby$dateF, trilby$gheight.ft, type="b", pch=19, xlab="Date",
 
 #Question 2
 
+#What was the earliest date of occurrence for each flood category in each river?
+#looked up syntax to filter within function
+firstDayFloodCategory <- floods %>%
+  group_by(names) %>%
+  filter(gheight.ft >= action.ft) %>%
+    summarise(action = min(datetime[gheight.ft >= action.ft]), 
+              flood = min(datetime[gheight.ft >= flood.ft]), 
+              moderate = min(datetime[gheight.ft >= moderate.ft]), 
+              major = min(datetime[gheight.ft >= major.ft]))
+
+#How quickly did changes in flood category occur
+floodChanges <- firstDayFloodCategory %>%
+  group_by(names) %>%
+  summarise(actionToFlood = ymd_hm(flood) - ymd_hm(action), 
+            floodToModerate = ymd_hm(moderate) - ymd_hm(flood), 
+            moderateToMajor = ymd_hm(major) - ymd_hm(moderate))
+
+speedOfFloodChange <- floodChanges %>%
+  group_by(names) %>%
+  summarise(seconds_to_period(actionToFlood), 
+            seconds_to_period(floodToModerate), 
+            seconds_to_period(moderateToMajor))
+
+
+#Question 3
+
+#find max stream height for each river
+maxH <- floods %>%
+  group_by(names) %>%
+  summarise(maxStage = max(gheight.ft), majorFlood = max(major.ft))
+
+#find difference from major flood level
+riverFloodDifferences <- maxH %>%
+  group_by(names) %>%
+  summarise(stageDifference = maxStage - majorFlood)
+
+worstFlood <- riverFloodDifferences %>%
+  filter(stageDifference == max(stageDifference))
+
+riverHighestDifference <- worstFlood$names
+  
+  
+  
